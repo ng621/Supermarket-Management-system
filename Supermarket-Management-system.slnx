@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="SeedData.sql" />
+  </Folder>
   <Project Path="Supermarket-Management-system.App/Supermarket-Management-system.App.csproj" />
   <Project Path="Supermarket-Management-system.Core/Supermarket-Management-system.Core.csproj" />
   <Project Path="Supermarket-Management-system.Tests/Supermarket-Management-system.Tests.csproj" />
