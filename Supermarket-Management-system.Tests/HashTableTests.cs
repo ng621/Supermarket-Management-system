@@ -4,35 +4,32 @@
 
     namespace Supermarket_Management_system.Tests;
 
-    public class HashTableTests
+public class HashTableTests
+{
+    [Fact]
+    public void Add_ThenGet_ReturnsStoredValue()
     {
-        [Fact]
-        public void Test1()
-        {
-            var table = new HashTable();
+        var table = new HashTable();
+        var milk = new Product { Title = "Milk", Barcode = "12345" };
+        table.Add("12345", milk);
+        Product result = table.Get("12345");
+        Assert.Equal(milk, result);
+    }
 
-            table.Add("12345", "Milk");
-            string result = table.Get("12345");
-
-            Assert.Equal("Milk", result);
-        }
     [Fact]
     public void Get_MissingKey_ReturnsNull()
     {
         var table = new HashTable();
-
-        string result = table.Get("99999");
-
+        Product result = table.Get("99999");
         Assert.Null(result);
     }
 
     [Fact]
-    public void Add_DuplicateKey_ThrowsException()
+    public void Add_DuplicateKey_Throws()
     {
         var table = new HashTable();
-
-        table.Add("12345", "Milk");
-
-        Assert.Throws<Exception>(() => table.Add("12345", "Bread"));
+        table.Add("12345", new Product { Title = "Milk" });
+        Assert.Throws<Exception>(() => table.Add("12345", new Product { Title = "Bread" }));
     }
 }
+

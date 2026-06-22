@@ -7,7 +7,7 @@ namespace Supermarket_Management_system.Core;
 public class TreeNode
 {
     public string Name;
-    public string Value;
+    public Product Value;
     public TreeNode Left;
     public TreeNode Right;
 

@@ -9,12 +9,12 @@ namespace Supermarket_Management_system.Core
 
         private TreeNode root;
 
-        public void Insert(string name, string value)
+        public void Insert(string name, Product value)
         {
             root = InsertHelper(root, name, value);
         }
 
-        private TreeNode InsertHelper(TreeNode current, string name, string value)
+        private TreeNode InsertHelper(TreeNode current, string name, Product value)
         {
 
             if (current == null)
@@ -40,12 +40,12 @@ namespace Supermarket_Management_system.Core
 
             return current;
         }
-        public string Search(string name)
+        public Product Search(string name)
         {
             return SearchHelper(root, name);
         }
 
-        private string SearchHelper(TreeNode current, string name)
+        private Product SearchHelper(TreeNode current, string name)
         {
              if (current == null)
             {
@@ -69,14 +69,14 @@ namespace Supermarket_Management_system.Core
             }
         }
 
-        public List<string> InOrder()
+        public List<Product> InOrder()
         {
-            List<string> results = new List<string>();
+            List<Product> results = new List<Product>();
             InOrderHelper(root, results);
             return results;
         }
 
-        private void InOrderHelper(TreeNode current,List<string> results)
+        private void InOrderHelper(TreeNode current,List<Product> results)
         {
             if (current == null)
             {

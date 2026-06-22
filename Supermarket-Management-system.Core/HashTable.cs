@@ -24,7 +24,7 @@ public class HashTable
         return hash % buckets.Length;
     }
 
-    public void Add(string key, string value)
+    public void Add(string key, Product value)
     {
         int index = Hash(key);
         Node node = buckets[index];
@@ -46,7 +46,7 @@ public class HashTable
         buckets[index] = newNode;
         count++;
     }
-    public string Get(string key)
+    public Product Get(string key)
     {
         int index = Hash(key);
         Node node = buckets[index];

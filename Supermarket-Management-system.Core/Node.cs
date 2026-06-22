@@ -7,7 +7,7 @@ namespace Supermarket_Management_system.Core
     public class Node
     {
         public string Key;
-        public string Value;
+        public Product Value;
         public Node Next;
     }
 }
