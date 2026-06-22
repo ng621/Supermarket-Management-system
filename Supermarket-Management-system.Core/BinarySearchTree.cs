@@ -68,6 +68,24 @@ namespace Supermarket_Management_system.Core
                 return SearchHelper(current.Right, name);
             }
         }
+
+        public List<string> InOrder()
+        {
+            List<string> results = new List<string>();
+            InOrderHelper(root, results);
+            return results;
+        }
+
+        private void InOrderHelper(TreeNode current,List<string> results)
+        {
+            if (current == null)
+            {
+                return;
+            }
+            InOrderHelper(current.Left, results);
+            results.Add(current.Value);
+            InOrderHelper(current.Right, results);
+        }
     }
 }
     
