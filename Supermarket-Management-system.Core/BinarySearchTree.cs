@@ -27,7 +27,7 @@ namespace Supermarket_Management_system.Core
                 return newNode;
             }
 
-            int compare = string.Compare(name, current.Name);
+            int compare = string.Compare(name, current.Name, StringComparison.OrdinalIgnoreCase);
 
             if (compare < 0)
             {
@@ -52,7 +52,7 @@ namespace Supermarket_Management_system.Core
                 return null;
             }
 
-            int compare = string.Compare(name, current.Name);
+            int compare = string.Compare(name, current.Name, StringComparison.OrdinalIgnoreCase);
 
             if (compare == 0)
             {
