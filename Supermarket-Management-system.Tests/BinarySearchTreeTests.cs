@@ -38,5 +38,31 @@ namespace Supermarket_Management_system.Tests
             var expected = new List<Product> { apple, milk, sugar };
             Assert.Equal(expected, result);
         }
+        [Fact]
+        public void Insert_ManyNames_AllSearchable()
+        {
+            var tree = new BinarySearchTree();
+             tree.Insert("Milk", new Product { Title = "Milk" });
+            tree.Insert("Apple", new Product { Title = "Apple" });
+            tree.Insert("Sugar", new Product { Title = "Sugar" });
+            tree.Insert("Bread", new Product { Title = "Bread" });
+
+             
+            Assert.Equal("Milk", ((Product)tree.Search("Milk")).Title);
+            Assert.Equal("Apple", ((Product)tree.Search("Apple")).Title);
+            Assert.Equal("Sugar", ((Product)tree.Search("Sugar")).Title);
+            Assert.Equal("Bread", ((Product)tree.Search("Bread")).Title);
+        }
+
+        [Fact]
+        public void Search_IsCaseInsensitive()
+        {
+            var tree = new BinarySearchTree();
+            tree.Insert("Milk", new Product { Title = "Milk" });
+
+             Product result = (Product)tree.Search("milk");
+            Assert.NotNull(result);
+            Assert.Equal("Milk", result.Title);
+        }
     }
 }
