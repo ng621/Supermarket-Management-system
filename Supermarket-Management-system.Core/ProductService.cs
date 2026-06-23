@@ -1,5 +1,6 @@
 ﻿ using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Supermarket_Management_system.Core
 {
@@ -81,6 +82,70 @@ namespace Supermarket_Management_system.Core
             nameIndex.Insert(product.Title, product);
 
             return null;
+        }
+
+        public List<Stock> GetLowStockItems()
+        {
+            List<Stock> lowStock = new List<Stock>();
+
+            using (var context = new SupermarketContext())
+            {
+                List<Stock> allStock = context.Stocks.Include(s => s.Product).ToList();
+                foreach (Stock s in allStock)
+                {
+                    if (s.QuantityInStock <= s.ReorderLevel) lowStock.Add(s);
+                }
+            }
+            return lowStock;
+        }
+        public string RecordSale(string barcode, int quantitySold)
+        {
+            Product product = barcodeIndex.Get(barcode);
+
+            if (product == null)
+            {
+                return "No product with that barcode";
+            }
+            if (quantitySold <= 0) 
+            {
+                return "Quantity must be positive";
+            }
+            using (var context = new SupermarketContext())
+            {
+                Stock stock = context.Stocks.FirstOrDefault(s => s.ProductId == product.ProductId);
+
+                if (stock == null) 
+                {
+                    return "No stock record for that product";
+                }
+                if (stock.QuantityInStock < quantitySold)
+                {
+                    return "Not enough stock. Only " + stock.QuantityInStock + " left.";
+                }
+                var sale = new Sale
+                {
+                    SaleDate = DateTime.Now,
+                    TotalAmount = product.Price * quantitySold
+                };
+                context.Sales.Add(sale);
+                context.SaveChanges();
+
+
+                var item = new SaleItem
+                {
+                    SaleId = sale.SaleId,
+                    ProductId = product.ProductId,
+                    Quantity = quantitySold,
+                    UnitPrice = product.Price,
+                };
+                context.SaleItems.Add(item);
+
+                stock.QuantityInStock = stock.QuantityInStock - quantitySold;
+
+                context.SaveChanges();
+            }
+            return null;
+           
         }
     }
 }

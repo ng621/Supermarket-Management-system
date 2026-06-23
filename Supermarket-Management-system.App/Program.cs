@@ -15,6 +15,7 @@ while (running)
     Console.WriteLine("3. Find product by name");
     Console.WriteLine("4. Add a product");
     Console.WriteLine("5. Low-stock report");
+    Console.WriteLine("6. Record a sale");
     Console.WriteLine("0. Exit");
     Console.Write("Choose an option: ");
 
@@ -35,7 +36,10 @@ while (running)
             AddProduct();
             break;
         case "5":
-            // TODO later
+            LowStockReport();
+            break;
+        case "6":
+                RecordSale();
             break;
         case "0":
             running = false;
@@ -156,4 +160,47 @@ void AddProduct()
         Console.WriteLine($"error: {error}");
     }
 
+}
+
+void LowStockReport()
+{
+    Console.WriteLine();
+    Console.WriteLine("==Low Stock Report==");
+
+    var lowItems = service.GetLowStockItems();
+
+    if (lowItems.Count == 0)
+    {
+        Console.WriteLine("All products are sufficiently stocked.");
+        return;
+    }
+
+    foreach (var s in lowItems)
+    {
+        Console.WriteLine($"{s.Product.Title} - {s.QuantityInStock} left (reorder at {s.ReorderLevel})");
+    }
+}
+
+void RecordSale()
+{
+    Console.Write("Barcode of Prduct sold: ");
+    string barcode = Console.ReadLine();
+
+    Console.Write("Quantity sold: ");
+    if (!int.TryParse(Console.ReadLine(), out int quantity))
+    {
+        Console.WriteLine("Invalid quantity.");
+        return;
+    }
+
+    string error = service.RecordSale(barcode, quantity);
+
+    if (error == null)
+    {
+        Console.WriteLine("Sale recorded.");
+    }
+    else
+    {
+        Console.WriteLine($"Error: {error}");
+    }
 }
