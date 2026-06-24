@@ -1,5 +1,6 @@
 <Solution>
   <Folder Name="/Solution Items/">
+    <File Path="README.md" />
     <File Path="SeedData.sql" />
   </Folder>
   <Project Path="Supermarket-Management-system.App/Supermarket-Management-system.App.csproj" />
